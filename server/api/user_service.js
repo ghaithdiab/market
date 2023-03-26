@@ -1,10 +1,10 @@
 import pool from "../config/database.js";
 
 
-const logIn=async(data,callBack)=>{
+const logIn=async(userName,callBack)=>{
   pool.query(`
     select * from users where user_name=?`,
-    [data.user_name],(error,results)=>{
+    [userName],(error,results)=>{
       if(error){
         return callBack(error)
       }else{
