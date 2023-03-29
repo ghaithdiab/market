@@ -3,11 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './LoginForm.css';
-import api from './../../util/requests.js';
+import api from '../../api/requests.js';
 import useAuth from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 export const LoginForm = () => {
-  const [userData,setUserData]=useState({})
+  const [userName,setuserName]=useState("");
+  const [password,setpassword]=useState("");
+  const [UserData,setUserData]=useState({
+    userName:"",
+    password:""
+  })
   const [validated, setValidated] = useState(false);
   const { auth } = useAuth();
 
@@ -17,31 +22,27 @@ export const LoginForm = () => {
   // }
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
-    setUserData({
-      userName:event.target[0].value,
-      password:event.target[1].value
-    })
-    const res= serverValidation(userData);
-    if(res.isLogedIn){
-      auth.user=true
-      return <Navigate to='/admin'/>
-    }
+    console.log(UserData)
+    serverValidation(UserData).then(res=>{
+      if(res.isLogedIn){
+        console.log(auth)
+        // auth.user=true
+        return <Navigate to='/admin'/>
+      }
+    });
     event.preventDefault();
   
   };
-  const serverValidation= async(userData)=>{
-    console.log(userData)
-    const response= await api.get('/login',{
-      method:'POST',
-      body:JSON.stringify(userData)
-      
-    })
+  const serverValidation= async(UserData)=>{
+    console.log(UserData)
+    const response= await api.post('/login',UserData)
     return response.data
   }
   return (
@@ -52,6 +53,10 @@ export const LoginForm = () => {
         <Form.Control
           required
           type="text"
+          onChange={(e)=>{
+            setuserName(e.target.value)
+            setUserData({...UserData,userName:e.target.value})
+          }}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>
@@ -62,6 +67,10 @@ export const LoginForm = () => {
         <Form.Control
           required
           type="password"
+          onChange={(e)=>{
+            setpassword(e.target.value)
+            setUserData({...UserData,password:e.target.value})
+          }}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>

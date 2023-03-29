@@ -2,6 +2,7 @@ import pool from "../config/database.js";
 
 
 const logIn=async(userName,callBack)=>{
+  console.log(userName)
   pool.query(`
     select * from users where user_name=?`,
     [userName],(error,results)=>{

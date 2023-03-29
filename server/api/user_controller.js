@@ -17,7 +17,7 @@ const getTableUsers=(req,res)=>{
 }
 
 const signIn=(req,res)=>{
-  console.log(req.body)
+  console.log(req.body.userName)
   logIn(req.body.userName,(error,result)=>{
     if(error){
       return res.status(401).json({
@@ -25,6 +25,7 @@ const signIn=(req,res)=>{
         isLogedIn:false
       })
     }
+    console.log(result)
     if(result.length>0){
       const user=result[0];
       if(req.body.password===user.user_password && req.body.userName===user.user_name){
@@ -33,14 +34,14 @@ const signIn=(req,res)=>{
           isLogedIn:true
         })
       }else{
-        return res.status(400).json({
+        return res.status(200).json({
           message:'faild  to login',
           isLogedIn:false
         })
       }
     }else{
-      return res.status(400).json({
-        message:'faild to Login',
+      return res.status(200).json({
+        message:'faild to Login no data found in data base',
         isLogedIn:false
       })
     }
