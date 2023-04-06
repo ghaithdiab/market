@@ -1,4 +1,4 @@
-import { addProduct,getAllProduct ,getProductById,updateProduct} from "./products_service.js";
+import { addProduct,getAllProduct ,getProductById,updateProduct,deleteProduct} from "./products_service.js";
 
 
 const AddProduct=(req,res)=>{
@@ -85,4 +85,27 @@ const UpdateProductController=(req,res)=>{
   }
 }
 
-export {AddProduct,getProducts,getProductByIdController,UpdateProductController}
+const deleteProductController=(req,res)=>{
+  if(req.params.id){
+    deleteProduct(req.params.id,(error,results)=>{
+      if(error){
+        res.status(400).json({
+          satus:'faild to delete',
+          message:error
+        })
+      }else{
+        res.status(200).json({
+          status:'product deleted',
+          message:results
+        })
+      }
+    })
+  }else{
+    res.status(400).json({
+      status:'faild',
+      message:'no id found'
+    })
+  }
+}
+
+export {AddProduct,getProducts,getProductByIdController,UpdateProductController,deleteProductController}

@@ -102,5 +102,15 @@ const updateProduct=async(id,productInfo,callBack)=>{
 
 }
 
+const deleteProduct=async(id,callBack)=>{
+  console.log(id)
+  pool.query(`delete from products where product_id=${id}`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(results)
+    }
+  })
+}
 
-export{addProduct,getAllProduct,getProductById,updateProduct}
+export{addProduct,getAllProduct,getProductById,updateProduct,deleteProduct}
