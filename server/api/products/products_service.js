@@ -35,5 +35,16 @@ const getAllProduct=async(callBack)=>{
   })
 }
 
+const getProductById=async(id,callBack)=>{
+  const productId=id;
+  pool.query(`select * from products where product_id=${productId}`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(null,results)
+    }
+  })
+}
 
-export{addProduct,getAllProduct}
+
+export{addProduct,getAllProduct,getProductById}

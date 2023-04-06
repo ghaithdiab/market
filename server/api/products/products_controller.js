@@ -1,4 +1,4 @@
-import { addProduct,getAllProduct } from "./products_service.js";
+import { addProduct,getAllProduct ,getProductById} from "./products_service.js";
 
 
 const AddProduct=(req,res)=>{
@@ -30,7 +30,7 @@ const getProducts=(req,res)=>{
     if(error){
       res.status(400).json({
         status:'faild',
-        message:'unable to get All prodcuts from database'
+        message:error
       })
     }else{
       res.status(200).json({
@@ -41,5 +41,20 @@ const getProducts=(req,res)=>{
   })
 }
 
+const getProductByIdController=(req,res)=>{
+  getProductById(req.params.id,(error,result)=>{
+    if(error){
+      res.status(400).json({
+        status:'faild',
+        message:error
+      })
+    }else{
+      res.status(200).json({
+        status:'success',
+        data:result
+      })
+    }
+  })
+}
 
-export {AddProduct,getProducts}
+export {AddProduct,getProducts,getProductByIdController}
