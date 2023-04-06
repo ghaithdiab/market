@@ -3,10 +3,11 @@ import "dotenv/config.js";
 import userRouter from "./api/users/user_Router.js";
 import cors from 'cors'
 import productsRouter from "./api/products/products_Router.js";
-
+import bodyParser from "body-parser";
 const app=express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/',userRouter);
 app.use('/products',productsRouter);
 

@@ -1,14 +1,13 @@
-import { addProduct,getAllProduct ,getProductById} from "./products_service.js";
+import { addProduct,getAllProduct ,getProductById,updateProduct} from "./products_service.js";
 
 
 const AddProduct=(req,res)=>{
-  console.log(typeof req.body)
   addProduct(req.body,(error,result)=>{
     if(error){
       console.error(error);
       res.status(500).json({
         status: 'error',
-        message: 'Unable to create product',
+        message: error,
       });
     }else {
       // Return the newly created product as a response
@@ -41,6 +40,11 @@ const getProducts=(req,res)=>{
   })
 }
 
+/**
+ * get product By id 
+ * @param {*} req 
+ * @param {*} res 
+ */
 const getProductByIdController=(req,res)=>{
   getProductById(req.params.id,(error,result)=>{
     if(error){
@@ -57,4 +61,28 @@ const getProductByIdController=(req,res)=>{
   })
 }
 
-export {AddProduct,getProducts,getProductByIdController}
+
+const UpdateProductController=(req,res)=>{
+  if(req.params.id && req.body.productInfo){
+    updateProduct(req.params.id,req.body.productInfo,(error,results)=>{
+      if(error){
+        res.status(400).json({
+          status:'faild to update',
+          message:error
+        })
+      }else{
+        res.status(200).json({
+          status:'product updated successfully',
+          message:results
+        })
+      }
+    })
+  }else{
+    res.status(400).json({
+      status:'faild',
+      message:'id or info not exist for the prosuct'
+    })
+  }
+}
+
+export {AddProduct,getProducts,getProductByIdController,UpdateProductController}
