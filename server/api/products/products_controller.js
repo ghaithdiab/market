@@ -1,4 +1,4 @@
-import { addProduct } from "./products_service.js";
+import { addProduct,getAllProduct } from "./products_service.js";
 
 
 const AddProduct=(req,res)=>{
@@ -22,5 +22,24 @@ const AddProduct=(req,res)=>{
   })
 }
 
+/**
+ * 
+ */
+const getProducts=(req,res)=>{
+  getAllProduct((error,result)=>{
+    if(error){
+      res.status(400).json({
+        status:'faild',
+        message:'unable to get All prodcuts from database'
+      })
+    }else{
+      res.status(200).json({
+        status:'success',
+        data:result
+      })
+    }
+  })
+}
 
-export {AddProduct}
+
+export {AddProduct,getProducts}

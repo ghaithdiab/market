@@ -21,5 +21,19 @@ const addProduct=async(productInfo,callBack)=>{
   }
 }
 
+/**
+ * function for get All products
+ * @param {*} callBack 
+ */
+const getAllProduct=async(callBack)=>{
+  pool.query(`select * from products`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(null,results);
+    }
+  })
+}
 
-export{addProduct}
+
+export{addProduct,getAllProduct}
