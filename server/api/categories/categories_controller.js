@@ -1,4 +1,4 @@
-import { addCategories, getAllCategories, getCategoriesById, updateCategory } from "./categories_service.js";
+import { addCategories, deleteCategory, getAllCategories, getCategoriesById, updateCategory } from "./categories_service.js";
 
 
 const addCategoriesController=(req,res)=>{
@@ -63,6 +63,12 @@ const getCategoryByIdController=(req,res)=>{
   })
 }
 
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 const updateCategoryController=(req,res)=>{
   if(req.params.id && req.body){
     updateCategory(req.params.id,req.body,(error,results)=>{
@@ -86,4 +92,27 @@ const updateCategoryController=(req,res)=>{
   }
 }
 
-export {addCategoriesController,getAllCategoriesController,getCategoryByIdController,updateCategoryController}
+const deleteCategoryController=(req,res)=>{
+  if(req.params.id){
+    deleteCategory(req.params.id,(error,results)=>{
+      if(error){
+        res.status(400).json({
+          satus:'faild to delete',
+          message:error
+        })
+      }else{
+        res.status(200).json({
+          status:'category deleted',
+          message:results
+        })
+      }
+    })
+  }else{
+    res.status(400).json({
+      status:'faild',
+      message:'no id found'
+    })
+  }
+}
+
+export {addCategoriesController,getAllCategoriesController,getCategoryByIdController,updateCategoryController,deleteCategoryController}

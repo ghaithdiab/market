@@ -61,7 +61,11 @@ const getProductByIdController=(req,res)=>{
   })
 }
 
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 const UpdateProductController=(req,res)=>{
   if(req.params.id && req.body){
     updateProduct(req.params.id,req.body,(error,results)=>{

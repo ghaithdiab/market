@@ -90,5 +90,14 @@ const updateCategory=async(id,categoryInfo,callBack)=>{
 
 }
 
+const deleteCategory=async(id,callBack)=>{
+  pool.query(`delete from categories where category_id=${id}`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(results)
+    }
+  })
+}
 
-export {addCategories,getAllCategories,getCategoriesById,updateCategory}
+export {addCategories,getAllCategories,getCategoriesById,updateCategory,deleteCategory}
