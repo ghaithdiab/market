@@ -1,4 +1,4 @@
-import { addCategories } from "./categories_service.js";
+import { addCategories, getAllCategories } from "./categories_service.js";
 
 
 const addCategoriesController=(req,res)=>{
@@ -21,4 +21,25 @@ const addCategoriesController=(req,res)=>{
   })
 }
 
-export {addCategoriesController}
+/**
+ * get All categories
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getAllCategoriesController=(req,res)=>{
+  getAllCategories((error,result)=>{
+    if(error){
+      res.status(400).json({
+        status:'faild to get categories',
+        message:error
+      })
+    }else{
+      res.status(200).json({
+        status:'success',
+        data:result
+      })
+    }
+  })
+}
+
+export {addCategoriesController,getAllCategoriesController}

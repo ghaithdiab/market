@@ -34,7 +34,19 @@ const addCategories=async(categoriesInfo,callBack)=>{
   }
 }
 
+/**
+ * get all categories
+ * @param {*} callBack 
+ */
+const getAllCategories=async(callBack)=>{
+  pool.query(`select * from categories`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(null,results);
+    }
+  })
+}
 
 
-
-export {addCategories}
+export {addCategories,getAllCategories}
