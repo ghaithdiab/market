@@ -1,12 +1,12 @@
 import express from 'express';
-import { addCategoriesController, getAllCategoriesController } from './categories_controller.js';
+import { addCategoriesController, getAllCategoriesController, getCategoryByIdController } from './categories_controller.js';
 
 const categoriesRouter=express.Router();
 
 
 categoriesRouter.post('/new',addCategoriesController);
 categoriesRouter.get('/getcategories',getAllCategoriesController);
-// productsRouter.get('/:id');
+categoriesRouter.get('/:id',getCategoryByIdController);
 // productsRouter.put('/:id');
 // productsRouter.delete('/:id');
 

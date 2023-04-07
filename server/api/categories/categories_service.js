@@ -48,5 +48,21 @@ const getAllCategories=async(callBack)=>{
   })
 }
 
+/**
+ * get category By id 
+ * @param {*} id  id of category 
+ * @param {*} callBack 
+ */
+const getCategoriesById=async(id,callBack)=>{
+  const categoryId=id;
+  pool.query(`select * from categories where category_id=${categoryId}`,(error,results)=>{
+    if(error){
+      return callBack(error)
+    }else{
+      return callBack(null,results)
+    }
+  })
+}
 
-export {addCategories,getAllCategories}
+
+export {addCategories,getAllCategories,getCategoriesById}
