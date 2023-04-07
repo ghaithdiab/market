@@ -1,4 +1,4 @@
-import { addCategories, getAllCategories, getCategoriesById } from "./categories_service.js";
+import { addCategories, getAllCategories, getCategoriesById, updateCategory } from "./categories_service.js";
 
 
 const addCategoriesController=(req,res)=>{
@@ -63,4 +63,27 @@ const getCategoryByIdController=(req,res)=>{
   })
 }
 
-export {addCategoriesController,getAllCategoriesController,getCategoryByIdController}
+const updateCategoryController=(req,res)=>{
+  if(req.params.id && req.body){
+    updateCategory(req.params.id,req.body,(error,results)=>{
+      if(error){
+        res.status(400).json({
+          status:'faild to update',
+          message:error
+        })
+      }else{
+        res.status(200).json({
+          status:'category updated successfully',
+          message:results
+        })
+      }
+    })
+  }else{
+    res.status(400).json({
+      status:'faild',
+      message:'id or info not exist for the category'
+    })
+  }
+}
+
+export {addCategoriesController,getAllCategoriesController,getCategoryByIdController,updateCategoryController}
