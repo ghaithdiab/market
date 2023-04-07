@@ -8,5 +8,5 @@ productsRouter.post('/new',AddProduct);
 productsRouter.get('/getproducts',getProducts);
 productsRouter.get('/:id',getProductByIdController);
 productsRouter.put('/:id',UpdateProductController);
-productsRouter.delete('/:id',deleteProductController)
+productsRouter.delete('/:id',deleteProductController);
 export default productsRouter;
