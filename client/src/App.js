@@ -7,19 +7,21 @@ import PrivateRoutes from './util/privateRoutes';
 import { AuthProvider } from './context/AuthProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { LayoutApp } from './components/LayoutApp/LayoutApp';
+
+
 function App() {
   return (
     <AuthProvider>
-      <Routes>
-        <Route path='/' element={<LayoutApp/>}>
-          <Route path='/' element={<Home/>}></Route>
-          <Route path='/login' element={<LoginUser/>}></Route>
-          <Route element={<PrivateRoutes/>}>
-            <Route path='/admin' element={<Admin/>}></Route>
-          </Route>
-          <Route path='*' element={<ErrorPage/>}></Route>
-        </Route>
-      </Routes>
+          <Routes>
+            <Route path='/' element={<LayoutApp/>}>
+              <Route path='/' element={<Home/>}></Route>
+              <Route path='/login' element={<LoginUser/>}></Route>
+              <Route element={<PrivateRoutes/>}>
+                <Route path='/admin' element={<Admin/>}></Route>
+              </Route>
+              <Route path='*' element={<ErrorPage/>}></Route>
+            </Route>
+          </Routes>
     </AuthProvider>
   );
 }

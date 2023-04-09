@@ -1,7 +1,7 @@
 
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Admin from "../pages/Admin";
+// import Admin from "../pages/Admin";
 
 const PrivateRoutes = () => {
     const { auth } = useAuth();

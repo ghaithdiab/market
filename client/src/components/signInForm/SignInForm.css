@@ -1,0 +1,41 @@
+section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-image: url('../../asset/ZETUONİ1.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: -130px;
+}
+
+.form{
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.form div{
+  margin-bottom: 10px;
+}
+
+.textfield:focus{
+  color: #ccc;
+}
+.btn{
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.input__textfield{
+  border-bottom-color: aliceblue !important;
+}

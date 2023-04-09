@@ -1,28 +1,64 @@
-import React from 'react'
+import React from 'react';
 import { useRef,useState,useEffect } from 'react';
 import api from '../../api/requests.js';
-import { Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import { Link,useNavigate,useLocation } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import LoginIcon from '@mui/icons-material/Login';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+// import Alert from '@mui/material/Alert';
+// import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import './SignInForm.css';
+import { makeStyles } from '@material-ui/styles';
+
+// const Alert = React.forwardRef<HTMLDivElement,AlertProps>(function Alert(){
+
+// })
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& .MuiInputLabel-root': {
+      fontWeight:'bold',
+      fontSize:'20px'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#ccc', // customize the color of the underline
+    },
+  },
+}));
+
 
 export const SignInForm = () => {
+  const classes=useStyles();
   const {setAuth}=useAuth();
   const navigate=useNavigate();
-  const location=useLocation();
-  const from= location.state?.from?.pathname ||"/"
- const userRef = useRef();
- const errRef = useRef();
+  // const location=useLocation();
+//  const userRef = useRef();
+//  const errRef = useRef();
  const [user, setUser] = useState('');
  const [pwd, setPwd] = useState('');
- const [errMsg, setErrMsg] = useState('');
- const [success, setSuccess] = useState(false);
+ const [error, setError] = useState(false);
+
   useEffect(()=>{
-    userRef.current.focus();
+    // userRef.current.focus();
   },[])
   useEffect(()=>{
-    setErrMsg('');
+    setError(false);
   },[user,pwd])
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setError(false);
+  };
   const handelSubmit=async(e)=>{
     e.preventDefault();
     try{
@@ -32,44 +68,59 @@ export const SignInForm = () => {
       if(response?.data.isLogedIn){
         setAuth({user,pwd})
         navigate('/admin', {replace:true})
+      }else{
+        setError(true)
       }
     }catch(err){
       if(!err?.response){
-        setErrMsg('No server response')
+        setError(true)
       }else if(err.response?.status){
-        setErrMsg('')
+        setError(true)
       }
     }
   }
   return (
     <>
-    {success ? (
       <section>
-        <h1>Tou are loged in </h1>
-      </section>
-    ): (
-      <section>
-      <p ref={errRef} className={errMsg ? "errmsg":"offscreen"}>{errMsg}</p>
-      <form onSubmit={handelSubmit}>
-        <label htmlFor='username'>UserName: </label>
-        <input type="text"
-        id='username'
-        ref={userRef}
-        autoComplete="off"
-        onChange={(e)=>setUser(e.target.value)}
-        value={user}
-        required/>
-        <label htmlFor='password'>password: </label>
-        <input type="password"
-        id='password'
-        autoComplete="off"
-        onChange={(e)=>setPwd(e.target.value)}
-        value={pwd}
-        required/>
-        <button>Sign In</button>
+      <div className='logo'></div>
+      <form onSubmit={handelSubmit} className='form'>
+        <div className=''>
+        <TextField
+          variant="standard"
+          id="outlined-basic"
+          label="اسم المستخدم :"
+          className={classes.root}
+          value={user}
+          onChange={(e)=>setUser(e.target.value)}
+          autoComplete='off'
+        />
+        </div>
+        <div>
+        <TextField
+          variant="standard"
+          id="outlined-basic"
+          label="كلمة المرور :"
+          className={classes.root}
+          value={pwd}
+          onChange={(e)=>setPwd(e.target.value)}
+          autoComplete='off'
+        />
+        </div>
+        <Stack direction="row"  spacing={2}>
+          <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            المعلومات غير صحيحة يرجى إعادة المحاولة
+          </Alert>
+          </Snackbar>
+        </Stack>
       </form>
+      <Button variant='contained' startIcon={<LoginIcon/>}
+            onClick={handelSubmit}
+            className='btn'
+          >
+             تسجيل الدخول 
+          </Button>
     </section>
-    )}
     </>
   )
 }

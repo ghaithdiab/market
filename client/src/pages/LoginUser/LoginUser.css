@@ -1,3 +1,4 @@
+
 .containerLoginPage{
   width: 100%;
   height: 100vh;
@@ -5,6 +6,9 @@
   margin: 0px !important;
   align-items: center;
   justify-content: center;
+  background-image: url('../../asset/loginBackground.jpg');
+  background-position:center;
+  background-size: cover;
 }
 
 .formContainer{
@@ -13,5 +17,7 @@
   border: 1px solid #eee;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 10px 5px 5px #eee;
+  box-shadow: 3px 5px 5px #000;
+  text-align: center;
+  background-color: #6a8c6ac7;
 }
