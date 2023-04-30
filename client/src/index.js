@@ -10,6 +10,8 @@ import {prefixer} from 'stylis';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
 import {theme} from './util/them';
+import {Provider} from 'react-redux'
+import store from './store';
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -21,13 +23,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthProvider>
+    <Provider store={store}>
       <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
         <App />    
       </ThemeProvider>
       </CacheProvider>
-    </AuthProvider>
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

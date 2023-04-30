@@ -1,7 +1,6 @@
 import React from 'react';
-import { useRef,useState,useEffect } from 'react';
+import {useState,useEffect } from 'react';
 import api from '../../api/requests.js';
-import useAuth from '../../hooks/useAuth';
 import {useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
@@ -13,6 +12,8 @@ import MuiAlert from '@mui/material/Alert';
 // import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import './SignInForm.css';
 import { makeStyles } from '@material-ui/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import authSlice from '../../store/auth-slice.js';
 
 // const Alert = React.forwardRef<HTMLDivElement,AlertProps>(function Alert(){
 
@@ -31,19 +32,15 @@ const useStyles = makeStyles(theme => ({
 
 
 export const SignInForm = () => {
+  const isLogedIn=useSelector((state)=>state.auth.isLoggedIn);
+  console.log(isLogedIn)
   const classes=useStyles();
-  const {setAuth}=useAuth();
   const navigate=useNavigate();
-  // const location=useLocation();
-//  const userRef = useRef();
-//  const errRef = useRef();
+  const dispatch=useDispatch();
  const [user, setUser] = useState('');
  const [pwd, setPwd] = useState('');
  const [error, setError] = useState(false);
 
-  useEffect(()=>{
-    // userRef.current.focus();
-  },[])
   useEffect(()=>{
     setError(false);
   },[user,pwd])
@@ -66,8 +63,9 @@ export const SignInForm = () => {
       ) 
       console.log(response?.data)
       if(response?.data.isLogedIn){
-        setAuth({user,pwd})
-        navigate('/admin', {replace:true})
+        // setAuth({user,pwd})
+        dispatch(authSlice.actions.logIn());
+        navigate('/dashboard', {replace:true})
       }else{
         setError(true)
       }

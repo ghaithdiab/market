@@ -1,14 +1,14 @@
 
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-// import Admin from "../pages/Admin";
+import { useSelector } from "react-redux";
+
 
 const PrivateRoutes = () => {
-    const { auth } = useAuth();
+    const isLogedIn=useSelector((state)=>state.auth.isLoggedIn);
     const location = useLocation();
 
     return (
-            auth.user
+            isLogedIn
             ? <Outlet/>
             : <Navigate to="/login" state={{ from: location }} replace />
     );
