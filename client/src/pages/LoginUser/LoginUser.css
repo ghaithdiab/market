@@ -6,7 +6,7 @@
   margin: 0px !important;
   align-items: center;
   justify-content: center;
-  background-image: url('../../asset/loginBackground.jpg');
+  background-image: url('../../../public//asset/images/loginBackground.jpg');
   background-position:center;
   background-size: cover;
 }

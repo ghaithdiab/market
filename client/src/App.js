@@ -8,11 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import { LayoutApp } from './components/LayoutApp/LayoutApp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import { ProductsPage } from './pages/Products/ProductsPage';
-
+import { Suspense } from 'react';
 
 function App() {
   return (
     <AuthProvider>
+      <Suspense fallback={null}>
           <Routes>
             {/* <Route path='/' element={<LayoutApp/>}> */}
               <Route path='/' element={<Home/>}></Route>
@@ -24,6 +25,7 @@ function App() {
               <Route path='*' element={<ErrorPage/>}></Route>
             {/* </Route> */}
           </Routes>
+      </Suspense>
      </AuthProvider>
   );
 }
